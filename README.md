@@ -4,10 +4,14 @@ Parse _USD exchange rates_ from **Myfin** and load data to **Google Sheet**.
 
 ## Launch
 
-Install required packages:
+Required dependencies:
 
-`pip install argparse beautifulsoup4 requests`
+```
+argparse beautifulsoup4 requests google-api-python-client google-auth-httplib2 google-auth-oauthlib gspread
+```
+
+Put Google API credentials in _credentials.json_.
 
 Run:
 
-`python run.py <link>`
+`python run.py <link> <sheet_id>`

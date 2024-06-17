@@ -17,9 +17,11 @@ class ArgumentService:
 
         # command line arguments
         parser.add_argument('link', help='download link')
+        parser.add_argument('sheet_id', help='Google Sheet id')
 
         namespace = parser.parse_args()
 
         return Settings(
-            namespace.link
+            namespace.link,
+            namespace.sheet_id
         )
