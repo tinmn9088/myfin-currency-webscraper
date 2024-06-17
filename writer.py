@@ -5,6 +5,10 @@ from myfin import ExchangeRate
 
 class ExchangeRatesWriter:
 
+    COLS_COUNT = 4
+
+    ROWS_COUNT = 80
+
     def __init__(self, sheet_id: str):
         '''
         Load creadentials from credentials.json, open spreadsheet by id and get the first worksheet.
@@ -20,7 +24,12 @@ class ExchangeRatesWriter:
 
         spreadsheet = client.open_by_key(sheet_id)
 
-        self.worksheet = spreadsheet.get_worksheet(0)
+        self.worksheet = spreadsheet.add_worksheet(title='Default name', rows=self.ROWS_COUNT, cols=self.COLS_COUNT)
+
+        # remove previous worksheet
+        spreadsheet.del_worksheet(spreadsheet.get_worksheet(0))
+
+        self.worksheet.update_title('Exchange rates')
 
     def __enter__(self) -> None:
         self.worksheet.clear()
@@ -117,7 +126,7 @@ class ExchangeRatesWriter:
         })
 
     def __exit__(self, exc_type, exc_value, exc_traceback):
-        self.worksheet.columns_auto_resize(0, 5)
+        self.worksheet.columns_auto_resize(0, self.COLS_COUNT)
 
     @staticmethod
     def get_color(red: int, green: int, blue: int):
